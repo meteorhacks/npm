@@ -1,6 +1,6 @@
 # meteor-npm [![Build Status](https://travis-ci.org/arunoda/meteor-npm.png?branch=master)](https://travis-ci.org/arunoda/meteor-npm)
 
-## Complete NPM integration for Meteor
+Complete NPM integration for Meteor
 
 See MeteorHacks article on [Complete NPM integration for Meteor](http://meteorhacks.com/complete-npm-integration-for-meteor.html)
 
