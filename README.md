@@ -32,11 +32,11 @@ if (Meteor.isServer) {
 
       var gists = Meteor.sync(function(done) {
         github.gists.getFromUser({user: 'arunoda'}, function(err, data) {
-          done(data);
+          done(null, data);
         });
       });
 
-      return gists;
+      return gists.result;
     }
   });
 }
