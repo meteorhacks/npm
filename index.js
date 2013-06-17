@@ -9,21 +9,15 @@ Meteor.sync = function(asynFunction) {
   var future = new Future();
   var sent = false;
   var payload;
-  var error;
 
   setTimeout(function() {
-    asynFunction(done, error);
-
-    function done(data) {
+    asynFunction(done);
+    function done(err, result) {
       if(!sent) {
-        payload = data;
-        future.ret();
-      }
-    }
-
-    function error(err) {
-      if(!sent) {
-        error = err;
+        payload = {
+          result: result,
+          error: err
+        };
         future.ret();
       }
     }
@@ -32,9 +26,5 @@ Meteor.sync = function(asynFunction) {
   future.wait();
   sent = true;
   
-  if(error) {
-    throw new Meteor.Error(error.code || 500, error.message);
-  } else {
-    return payload;
-  }
+  return payload;
 };

@@ -1,21 +1,22 @@
 Tinytest.add('Meteor.sync with done()', function(test) {
-  var result = Meteor.sync(function(done) {
+  var output = Meteor.sync(function(done) {
     setTimeout(function() {
-      done(10001);
+      done(null, 10001);
     }, 10);
   });
 
-  test.equal(result, 10001);
+  test.equal(output.result, 10001);
+  test.equal(output.error, null);
 });
 
 Tinytest.add('Meteor.sync with error()', function(test) {
   
-  var result = Meteor.sync(function(done, error) {
+  var output = Meteor.sync(function(done) {
     setTimeout(function() {
-      error({message: 'error-message', code: 402});
+      done({message: 'error-message', code: 402});
     }, 10);
   });
 
-  test.equal(result, undefined);
-
+  test.equal(output.result, undefined);
+  test.equal(output.error.code, 402);
 });
