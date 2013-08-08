@@ -45,6 +45,7 @@ if (Meteor.isServer) {
 ## API
 
 ### Meteor.require(npmModuleName)
+> Available in the Server Side only
 
 This method loads NPM modules you've specified in the `packages.json` file.
 
@@ -53,6 +54,7 @@ var Github = Meteor.require('github');
 ~~~
 
 ### Meteor.sync(func)
+> Available in the Server Side only
 
 Meteor APIs are executed synchronously. Most of the NodeJS modules works asynchronously. So we need a way to bride the gap. `Meteor.sync()` does that.
 
