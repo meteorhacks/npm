@@ -1,6 +1,6 @@
 {
   "name": "meteor-npm",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Complete NPM support for Meteor",
   "bin": {
     "meteor-npm": "./bin/meteor-npm"
