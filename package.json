@@ -1,0 +1,17 @@
+{
+  "name": "meteor-npm",
+  "version": "0.1.1",
+  "description": "Complete NPM support for Meteor",
+  "bin": {
+    "meteor-npm": "./bin/meteor-npm"
+  },
+  "author": "Arunoda Susiripala <arunoda.susiripala@gmail.com>",
+  "dependencies": {
+    "rimraf": "2.x",
+    "mkdirp": "0.3.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/arunoda/meteor-npm.git"
+  }
+}
