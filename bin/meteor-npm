@@ -28,6 +28,7 @@ mkdirp.sync('packages/npm');
 copySync(path.resolve(__dirname, '../package.js'), './packages/npm/package.js');
 copySync(path.resolve(__dirname, '../packages.json'), './packages/npm/packages.json');
 copySync(path.resolve(__dirname, '../index.js'), './packages/npm/index.js');
+copySync(path.resolve(__dirname, '../test.js'), './packages/npm/test.js');
 
 //symlink packages.json into the project root
 fs.symlinkSync('./packages/npm/packages.json', './packages.json');
