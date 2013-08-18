@@ -19,7 +19,7 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  api.add_files(['index.js'], 'server');
+  api.add_files(['index.js', 'packages.json'], 'server');
 });
 
 Package.on_test(function (api) {
