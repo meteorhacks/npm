@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var fs = require('fs');
-var oldPackagesJsonContent;
 var rimraf = require('rimraf');
 var mkdirp = require('mkdirp');
 var path = require('path');
@@ -12,31 +11,16 @@ if(!fs.existsSync('.meteor/packages')) {
   process.exit(1);
 }
 
-//read and save content of the packages.json
-if(fs.existsSync('./packages.json')) {
-  oldPackagesJsonContent = fs.readFileSync('./packages.json', 'utf8');
-}
-
 //remove packages/npm
 rimraf.sync('packages/npm');
-try{ fs.unlinkSync('packages.json'); } catch(ex) {}
 
 //mkdir packages/npm
 mkdirp.sync('packages/npm');
 
 //copy package.js, packages.json, index.js
 copySync(path.resolve(__dirname, '../package.js'), './packages/npm/package.js');
-copySync(path.resolve(__dirname, '../packages.json'), './packages/npm/packages.json');
 copySync(path.resolve(__dirname, '../index.js'), './packages/npm/index.js');
 copySync(path.resolve(__dirname, '../test.js'), './packages/npm/test.js');
-
-//symlink packages.json into the project root
-fs.symlinkSync('./packages/npm/packages.json', './packages.json');
-
-//copy old packages.json content
-if(oldPackagesJsonContent) {
-  fs.writeFileSync('packages/npm/packages.json', oldPackagesJsonContent);
-}
 
 //add npm to ./.meteor/packaegs for versions grater than 0.6.5
 var meteorPackages = fs.readFileSync('.meteor/packages', 'utf8');
