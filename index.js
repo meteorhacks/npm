@@ -18,7 +18,7 @@ Meteor.sync = function(asynFunction) {
           result: result,
           error: err
         };
-        future.ret();
+        future.return();
       }
     }
   }, 0);
