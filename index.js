@@ -18,7 +18,14 @@ Meteor.sync = function(asynFunction) {
           result: result,
           error: err
         };
-        future.return();
+
+        if(future.ret) {
+          //for 0.6.4.1 and older
+          future.ret();
+        } else {
+          //for 0.6.5 and newer
+          future.return();
+        }
       }
     }
   }, 0);
