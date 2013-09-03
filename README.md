@@ -72,7 +72,7 @@ console.log(response.result); // 1001
 
 `done()` callback takes 2 arguments. error and the result object. You can get them as the return value of the `Meteor.sync()` as shown as response in the above example.
 
-return value is an object and it has 2 fields. `error` and `response`.
+return value is an object and it has 2 fields. `error` and `result`.
 
 
 
