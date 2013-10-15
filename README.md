@@ -2,6 +2,10 @@
 
 See MeteorHacks article on [Complete NPM integration for Meteor](http://meteorhacks.com/complete-npm-integration-for-meteor.html)
 
+#### If you are migrating from Meteor 0.6.5.x to 0.6.6.x, please check this [issue](https://github.com/arunoda/meteor-npm/issues/12).
+
+---
+
 ### Adding NPM support to your app
 
     mrt add npm
