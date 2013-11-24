@@ -3,6 +3,6 @@
   "description": "Complete NPM integration/support for Meteor",
   "homepage": "https://github.com/arunoda/meteor-npm",
   "author": "Arunoda Susiripala <arunoda.susiripala@gmail.com>",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "git": "https://github.com/arunoda/meteor-npm.git"
 }
