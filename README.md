@@ -34,7 +34,7 @@ if (Meteor.isServer) {
           version: "3.0.0"
       });
 
-      var gists = Meteor.sync(function(done) {
+      var gists = Async.runSync(function(done) {
         github.gists.getFromUser({user: 'arunoda'}, function(err, data) {
           done(null, data);
         });
@@ -47,9 +47,9 @@ if (Meteor.isServer) {
 ~~~
 
 ## API
+> Available in the Server Side only
 
 ### Meteor.require(npmModuleName)
-> Available in the Server Side only
 
 This method loads NPM modules you've specified in the `packages.json` file.
 
@@ -57,15 +57,18 @@ This method loads NPM modules you've specified in the `packages.json` file.
 var Github = Meteor.require('github');
 ~~~
 
-### Meteor.sync(func)
+## Async Utilities
 > Available in the Server Side only
 
-Meteor APIs are executed synchronously. Most of the NodeJS modules works asynchronously. So we need a way to bride the gap. `Meteor.sync()` does that.
+Meteor APIs are executed synchronously. Most of the NodeJS modules works asynchronously. 
+So we need a way to bride the gap. Async Utilities comes to rescue you.
 
-`Meteor.sync()` pause the execution until you invoke `done()` callback as shown below.
+### Async.runSync(function) 
+
+`Async.runSync()` pause the execution until you invoke `done()` callback as shown below.
 
 ~~~
-var response = Meteor.sync(function(done) {
+var response = Async.runSync(function(done) {
   setTimeout(function() { 
     done(null, 1001);
   }, 100);
@@ -74,9 +77,72 @@ var response = Meteor.sync(function(done) {
 console.log(response.result); // 1001
 ~~~
 
-`done()` callback takes 2 arguments. error and the result object. You can get them as the return value of the `Meteor.sync()` as shown as response in the above example.
+`done()` callback takes 2 arguments. `error` and the `result` object. You can get them as the return value of the `Async.runSync()` as shown as response in the above example.
 
 return value is an object and it has 2 fields. `error` and `result`.
 
+### Meteor.sync(function)
 
+Same as `Async.runSync` but deprecated. 
 
+### Async.wrap(function) 
+
+Wrap an asynchronous function and allow it to be run inside Meteor without callbacks.
+
+~~~
+
+//declare a simple async function
+function delayedMessge(delay, message, callback) {
+  setTimeout(function() {
+    callback(null, message);
+  }, delay);
+}
+
+//wrapping
+var wrappedDelayedMessage = Async.wrap(delayedMessge);
+
+//usage
+Meteor.methods({
+  'delayedEcho': function(message) {
+    var response = wrappedDelayedMessage(500, message);
+    return response.result;
+  }
+});
+~~~
+
+`Async.wrap` is very similar to `Meteor._wrapAsync` but the 
+wrapped function's return value is simular to the `Async.runSync`'s return value
+
+So you can handle errors which is not possible with `Meteor._wrapAsync`
+
+### Async.wrap(object, functionName)
+
+Very similar to `Async.wrap(function)`, 
+but this API can be used to wrap an instance method of an object.
+
+~~~
+var github = new GithubApi({
+    version: "3.0.0"
+});
+
+//wrapping github.user.getFrom
+var wrappedGetFrom = Async.wrap(github.user, 'getFrom');
+~~~
+
+### Async.wrap(object, functionNameList)
+
+Very similar to `Async.wrap(object, functionName)`, 
+but this API can be used to wrap **multiple** instance methods of an object.
+
+~~~
+var github = new GithubApi({
+    version: "3.0.0"
+});
+
+//wrapping github.user.getFrom and github.user.getEmails
+var wrappedGithubUser = Async.wrap(github.user, ['getFrom', 'getEmails']);
+
+//usage
+var profile = wrappedGithubUser.getFrom('arunoda');
+var emails = wrappedGithubUser.getEmails();
+~~~

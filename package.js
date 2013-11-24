@@ -20,14 +20,21 @@ Package.describe({
 });
 
 Package.on_use(function (api, where) {
-  var isNewerMeteor = fs.readFileSync('./.meteor/packages', 'utf8').match(/\nstandard-app-packages/);
-  if(isNewerMeteor) {
+  api.export('Async');
+
+  var packagesFile = './.meteor/packages';
+  if(fs.existsSync(packagesFile) && isNewerMeteor) {
     api.add_files(['index.js', '../../packages.json'], 'server');
   } else {
     api.add_files(['index.js'], 'server');
   }
+
+  function isNewerMeteor() {
+    return fs.readFileSync(packagesFile, 'utf8').match(/\nstandard-app-packages/);
+  }
 });
 
 Package.on_test(function (api) {
+  api.use(['tinytest']);
   api.add_files(['index.js', 'test.js'], 'server');
 });
