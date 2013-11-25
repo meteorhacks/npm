@@ -20,7 +20,7 @@ Tinytest.add('Meteor.sync with error()', function(test) {
   test.equal(output.error.code, 402);
 });
 
-Tinytest.add('Async.wrap function mode', function(test) {
+Tinytest.add('Async.wrap function mode - success', function(test) {
   function wait(timeout, callback) {
     setTimeout(function() {
       callback(null, 'okay');
@@ -30,8 +30,27 @@ Tinytest.add('Async.wrap function mode', function(test) {
   var enclosedWait = Async.wrap(wait);
   var output = enclosedWait(100);
 
-  test.equal(output.result, 'okay');
-  test.equal(output.error, null);
+  test.equal(output, 'okay');
+});
+
+Tinytest.add('Async.wrap function mode - error', function(test) {
+  function wait(timeout, callback) {
+    setTimeout(function() {
+      var error = new Error('THE_ERROR');
+      error.code = 500;
+      callback(error);
+    }, timeout);
+  };
+
+  var enclosedWait = Async.wrap(wait);
+  try {
+    enclosedWait(100);
+    test.fail('there must be an error');
+  } catch(err) {
+    test.ok(err.message.match('THE_ERROR'));
+    test.equal(err.code, 500);
+  }
+
 });
 
 Tinytest.add('Async.wrap object mode - success', function(test) {
@@ -48,8 +67,7 @@ Tinytest.add('Async.wrap object mode - success', function(test) {
   var enclosedWait = Async.wrap(wait, 'start');
 
   var output = enclosedWait(100);
-  test.equal(output.result, 'okay');
-  test.equal(output.error, null);
+  test.equal(output, 'okay');
 });
 
 Tinytest.add('Async.wrap object mode - funcName not exists', function(test) {

@@ -69,10 +69,16 @@ Async.wrap = function(arg1, arg2) {
   function wrapFunction(func) {
     return function() {
       var args = arguments;
-      return Meteor.sync(function(done) {
+      response = Meteor.sync(function(done) {
         Array.prototype.push.call(args, done);
         func.apply(null, args);
       });
+
+      if(response.error) {
+        throw response.error;
+      } else {
+        return response.result;
+      }
     };
   }
 };

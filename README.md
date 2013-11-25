@@ -105,15 +105,14 @@ var wrappedDelayedMessage = Async.wrap(delayedMessge);
 Meteor.methods({
   'delayedEcho': function(message) {
     var response = wrappedDelayedMessage(500, message);
-    return response.result;
+    return response;
   }
 });
 ~~~
 
-`Async.wrap` is very similar to `Meteor._wrapAsync` but the 
-wrapped function's return value is simular to the `Async.runSync`'s return value
+If the callback has a result, it will be returned from the wrapped function. If there is an error, it will be thrown.
 
-So you can handle errors which is not possible with `Meteor._wrapAsync`
+> `Async.wrap(function)` is very similar to `Meteor._wrapAsync`. 
 
 ### Async.wrap(object, functionName)
 
