@@ -1,5 +1,5 @@
-Tinytest.add('Meteor.sync with done()', function(test) {
-  var output = Meteor.sync(function(done) {
+Tinytest.add('Async.runSync - with done()', function(test) {
+  var output = Async.runSync(function(done) {
     setTimeout(function() {
       done(null, 10001);
     }, 10);
@@ -9,8 +9,8 @@ Tinytest.add('Meteor.sync with done()', function(test) {
   test.equal(output.error, null);
 });
 
-Tinytest.add('Meteor.sync with error()', function(test) {
-  var output = Meteor.sync(function(done) {
+Tinytest.add('Async.runSync - with error()', function(test) {
+  var output = Async.runSync(function(done) {
     setTimeout(function() {
       done({message: 'error-message', code: 402});
     }, 10);
@@ -18,6 +18,15 @@ Tinytest.add('Meteor.sync with error()', function(test) {
 
   test.equal(output.result, undefined);
   test.equal(output.error.code, 402);
+});
+
+Tinytest.add('Async.runSync - with error in the callback', function(test) {
+  var output = Async.runSync(function(done) {
+    throw new Error('SOME_ERROR');
+  });
+
+  test.equal(output.result, undefined);
+  test.equal(output.error.message, 'SOME_ERROR');
 });
 
 Tinytest.add('Async.wrap function mode - success', function(test) {

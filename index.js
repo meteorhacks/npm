@@ -11,28 +11,24 @@ Async.runSync = Meteor.sync = function(asynFunction) {
   var sent = false;
   var payload;
 
-  setTimeout(function() {
-    asynFunction(done);
-    function done(err, result) {
-      if(!sent) {
-        payload = {
-          result: result,
-          error: err
-        };
+  var wrappedAsyncFunction = Meteor.bindEnvironment(asynFunction, function(err) {
+    console.error('Error inside the Async.runSync: ' + err.message);
+    returnFuture(err);
+  });
 
-        if(future.ret) {
-          //for 0.6.4.1 and older
-          future.ret();
-        } else {
-          //for 0.6.5 and newer
-          future.return();
-        }
-      }
-    }
+  setTimeout(function() {
+    wrappedAsyncFunction(returnFuture);
   }, 0);
 
   future.wait();
   sent = true;
+
+  function returnFuture(error, result) {
+    if(!sent) {
+      payload = { result: result, error: error};
+      future.return();
+    }
+  }
   
   return payload;
 };
