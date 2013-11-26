@@ -75,7 +75,15 @@ Async.wrap = function(arg1, arg2) {
       });
 
       if(response.error) {
-        throw response.error;
+        //we need to wrap a new error here something throw error object comes with response does not 
+        //print the correct error to the console, if there is not try catch block
+        var error = new Error(response.error.message);
+        for(var key in response.error) {
+          if(error[key] === undefined) {
+            error[key] = response.error[key];
+          }
+        }
+        throw error;
       } else {
         return response.result;
       }
