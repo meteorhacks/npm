@@ -6,9 +6,22 @@ See MeteorHacks article on [Complete NPM integration for Meteor](http://meteorha
 
 ---
 
-### Adding NPM support to your app
+## Adding NPM support to your app
+
+### Via Meteorite
 
     mrt add npm
+    
+If you are working on multiple meteor projects at the sametime or using different versions, 
+try to use following method instead using it with meteorite
+    
+### Via NPM
+
+    npm install -g meteor-npm //single time operation
+    meteor-npm //type inside your project
+    
+This creates a package named `npm` inside your project and it has no link with meteorite. It is also included in your git.
+With this, you can use npm in multiple meteor projects without a problem, regardless of their versions.
 
 ### Create packages.json file for listing dependencies.
 
