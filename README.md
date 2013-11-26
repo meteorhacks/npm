@@ -10,25 +10,31 @@ See MeteorHacks article on [Complete NPM integration for Meteor](http://meteorha
 
 ### Via Meteorite
 
-    mrt add npm
+~~~bash
+mrt add npm
+~~~
     
 If you are working on multiple meteor projects at the sametime or using different versions, 
 try to use following method instead using it with meteorite
     
 ### Via NPM
 
-    npm install -g meteor-npm //single time operation
-    meteor-npm //type inside your project
+~~~bash
+npm install -g meteor-npm #single time operation
+meteor-npm #type inside your project
+~~~
     
 This creates a package named `npm` inside your project and it has no link with meteorite. It is also included in your git.
 With this, you can use npm in multiple meteor projects without a problem, regardless of their versions.
 
 ### Create packages.json file for listing dependencies.
 
-    {
-      "redis": "0.8.2",
-      "github": "0.1.8"
-    }
+~~~json
+{
+  "redis": "0.8.2",
+  "github": "0.1.8"
+}
+~~~
 
 ### Example on using npm module inside a Meteor method
 
@@ -66,7 +72,7 @@ if (Meteor.isServer) {
 
 This method loads NPM modules you've specified in the `packages.json` file.
 
-~~~
+~~~js
 var Github = Meteor.require('github');
 ~~~
 
@@ -80,7 +86,7 @@ So we need a way to bride the gap. Async Utilities comes to rescue you.
 
 `Async.runSync()` pause the execution until you invoke `done()` callback as shown below.
 
-~~~
+~~~js
 var response = Async.runSync(function(done) {
   setTimeout(function() { 
     done(null, 1001);
@@ -102,7 +108,7 @@ Same as `Async.runSync` but deprecated.
 
 Wrap an asynchronous function and allow it to be run inside Meteor without callbacks.
 
-~~~
+~~~js
 
 //declare a simple async function
 function delayedMessge(delay, message, callback) {
@@ -132,7 +138,7 @@ If the callback has a result, it will be returned from the wrapped function. If 
 Very similar to `Async.wrap(function)`, 
 but this API can be used to wrap an instance method of an object.
 
-~~~
+~~~js
 var github = new GithubApi({
     version: "3.0.0"
 });
@@ -146,7 +152,7 @@ var wrappedGetFrom = Async.wrap(github.user, 'getFrom');
 Very similar to `Async.wrap(object, functionName)`, 
 but this API can be used to wrap **multiple** instance methods of an object.
 
-~~~
+~~~js
 var github = new GithubApi({
     version: "3.0.0"
 });
