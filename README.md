@@ -36,6 +36,14 @@ With this, you can use npm in multiple meteor projects without a problem, regard
 }
 ~~~
 
+If you need to install an npm module from a specific commit, use the syntax:
+
+~~~json
+{
+  "googleapis": "https://github.com/bradvogel/google-api-nodejs-client/archive/d945dabf416d58177b0c14da64e0d6038f0cc47b.tar.gz"
+}
+~~~
+
 ### Example on using npm module inside a Meteor method
 
 ~~~js
