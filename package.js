@@ -1,40 +1,29 @@
-var path = Npm.require('path');
-var fs = Npm.require('fs');
-var packagesJsonFile = path.resolve('./packages.json');
-
-//creating `packages.json` file for the first-time if not exists
-if(!fs.existsSync(packagesJsonFile)) {
-  fs.writeFileSync(packagesJsonFile, '{\n  \n}')
-}
-
-try {
-  var fileContent = fs.readFileSync(packagesJsonFile);
-  var packages = JSON.parse(fileContent.toString());
-  Npm.depends(packages);
-} catch(ex) {
-  console.error('ERROR: packages.json parsing error [ ' + ex.message + ' ]');
-}
-
 Package.describe({
-  summary: "complete npm integration/support for Meteor"
+  summary: "Use npm modules with your Meteor App",
+  version: "1.1.2",
+  git: "https://github.com/meteorhacks/npm.git",
+  name: "meteorhacks:npm"
+});
+
+Package._transitional_registerBuildPlugin({
+  name: "initializing-npm-support",
+  use: [],
+  sources: [
+    'plugin/init_npm.js'
+  ],
+  npmDependencies: {}
 });
 
 Package.on_use(function (api, where) {
   api.export('Async');
-
-  var packagesFile = './.meteor/packages';
-  if(fs.existsSync(packagesFile) && isNewerMeteor) {
-    api.add_files(['index.js', '../../packages.json'], 'server');
-  } else {
-    api.add_files(['index.js'], 'server');
-  }
-
-  function isNewerMeteor() {
-    return fs.readFileSync(packagesFile, 'utf8').match(/\nstandard-app-packages/);
-  }
+  api.add_files(['index.js'], 'server');
 });
 
 Package.on_test(function (api) {
+  if(api.versionsFrom) {
+    api.versionsFrom('METEOR@0.9.0');
+  }
+
   api.use(['tinytest']);
   api.add_files(['index.js', 'test.js'], 'server');
 });
