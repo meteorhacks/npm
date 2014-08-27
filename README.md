@@ -1,33 +1,18 @@
-# Complete NPM integration for Meteor [![Build Status](https://travis-ci.org/arunoda/meteor-npm.png?branch=master)](https://travis-ci.org/arunoda/meteor-npm)
+# Use Npm Modules with Your Meteor App
 
-See MeteorHacks article on [Complete NPM integration for Meteor](http://meteorhacks.com/complete-npm-integration-for-meteor.html)
+With Meteor, npm modules can onl you only can use `npm` modules inside packages. You can't directly use `npm` modules with meteor apps. This package solves that issue :)
 
-#### If you are migrating from Meteor 0.6.5.x to 0.6.6.x, please check this [issue](https://github.com/arunoda/meteor-npm/issues/12).
+## Installation
 
----
+```
+meteor add meteorhacks:npm
+```
 
-## Adding NPM support to your app
+Then start your app with `meteor` and follow the instructions.
 
-### Via Meteorite
+## Defining Packages
 
-~~~bash
-mrt add npm
-~~~
-    
-If you are working on multiple meteor projects at the sametime or using different versions, 
-try to use following method instead using it with meteorite
-    
-### Via NPM
-
-~~~bash
-npm install -g meteor-npm #single time operation
-meteor-npm #type inside your project
-~~~
-    
-This creates a package named `npm` inside your project and it has no link with meteorite. It is also included in your git.
-With this, you can use npm in multiple meteor projects without a problem, regardless of their versions.
-
-### Create packages.json file for listing dependencies.
+Once the npm support has been initialized, you'll be having a file name called `packages.json` inside your app. Define packages on that file as shown below.
 
 ~~~json
 {
@@ -36,6 +21,8 @@ With this, you can use npm in multiple meteor projects without a problem, regard
 }
 ~~~
 
+> You must need to define absolute version number of the npm module
+
 If you need to install an npm module from a specific commit, use the syntax:
 
 ~~~json
@@ -43,6 +30,11 @@ If you need to install an npm module from a specific commit, use the syntax:
   "googleapis": "https://github.com/bradvogel/google-api-nodejs-client/archive/d945dabf416d58177b0c14da64e0d6038f0cc47b.tar.gz"
 }
 ~~~
+
+## Using Packages
+
+You can use `Meteor.npmRequire` method to access the npm module on server side and use it as you want. 
+Most of the npm modules provide asynchronous API's with callbacks or promises. So, you can't directly use them with Meteor. Because of that, this package comes with a handy set of Async utilities make your life easier. 
 
 ### Example on using npm module inside a Meteor method
 
@@ -56,7 +48,7 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.methods({
     'getGists': function getGists(user) {
-      var GithubApi = Meteor.require('github');
+      var GithubApi = Meteor.npmRequire('github');
       var github = new GithubApi({
           version: "3.0.0"
       });
@@ -76,13 +68,16 @@ if (Meteor.isServer) {
 ## API
 > Available in the Server Side only
 
-### Meteor.require(npmModuleName)
+#### Meteor.npmRequire(npmModuleName)
 
 This method loads NPM modules you've specified in the `packages.json` file.
 
 ~~~js
-var Github = Meteor.require('github');
+var Github = Meteor.npmRequire('github');
 ~~~
+
+#### Meteor.require(npmModuleName)
+Same as above. But **deprecated**.
 
 ## Async Utilities
 > Available in the Server Side only
