@@ -1,11 +1,6 @@
 var Future = Npm.require('fibers/future');
 Async = {};
 
-Meteor.require = function(moduleName) {
-  var module = Npm.require(moduleName);
-  return module;
-};
-
 Async.runSync = Meteor.sync = function(asynFunction) {
   var future = new Future();
   var sent = false;
