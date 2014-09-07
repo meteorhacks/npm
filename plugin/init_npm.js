@@ -22,13 +22,13 @@ if(canProceed() && !fs.existsSync(npmContainerDir)) {
   var packageJsPath = path.resolve(npmContainerDir, 'package.js');
   var indexJsPath = path.resolve(npmContainerDir, 'index.js');
   // create new npm container directory
-  execSync("mkdir -p " + npmContainerDir);
+  execSync("mkdir -p '" + npmContainerDir + "'");
   // add package files
   fs.writeFileSync(indexJsPath, getContent(_indexJsContent));
   fs.writeFileSync(packageJsPath, getContent(_packageJsContent));
 
   // remove old npm package if exists
-  execSync("rm -rf " + oldNpmPackageDir);
+  execSync("rm -rf '" + oldNpmPackageDir + "'");
   // add new container as a package
   execSync('echo "\nnpm-container" >> .meteor/packages');
 
