@@ -5,6 +5,10 @@
       "1.0.2"
     ],
     [
+      "meteorhacks:async",
+      "1.0.0"
+    ],
+    [
       "underscore",
       "1.0.0"
     ]

@@ -81,6 +81,7 @@ Same as above. But **deprecated**.
 
 ## Async Utilities
 > Available in the Server Side only
+> Async Utitlies is available as a seperate package via [`meteorhacks:async`](https://github.com/meteorhacks/meteor-async)
 
 Meteor APIs are executed synchronously. Most of the NodeJS modules works asynchronously. 
 So we need a way to bride the gap. Async Utilities comes to rescue you.
