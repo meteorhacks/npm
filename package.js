@@ -11,7 +11,11 @@ Package._transitional_registerBuildPlugin({
   sources: [
     'plugin/init_npm.js'
   ],
-  npmDependencies: {}
+  npmDependencies: {
+    'mkdirp': '0.5.0',
+    'rimraf': '2.2.8',
+    'node-echo': '0.1.1'
+  }
 });
 
 Package.onUse(function (api, where) {
