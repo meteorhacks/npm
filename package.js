@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Use npm modules with your Meteor App",
-  version: "1.2.0",
+  version: "1.2.1",
   git: "https://github.com/meteorhacks/npm.git",
   name: "meteorhacks:npm"
 });
@@ -11,7 +11,11 @@ Package._transitional_registerBuildPlugin({
   sources: [
     'plugin/init_npm.js'
   ],
-  npmDependencies: {}
+  npmDependencies: {
+    'mkdirp': '0.5.0',
+    'rimraf': '2.2.8',
+    'node-echo': '0.1.1'
+  }
 });
 
 Package.onUse(function (api, where) {

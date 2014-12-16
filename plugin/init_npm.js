@@ -2,6 +2,9 @@ var path = Npm.require('path');
 var fs = Npm.require('fs');
 var Future = Npm.require('fibers/future');
 var exec = Npm.require('child_process').exec;
+var mkdirp = Npm.require('mkdirp');
+var rimraf = Npm.require('rimraf');
+var echo = Npm.require('node-echo');
 
 var oldNpmPackageDir = path.resolve('./packages/npm');
 var npmContainerDir = path.resolve('./packages/npm-container');
@@ -22,15 +25,18 @@ if(canProceed() && !fs.existsSync(npmContainerDir)) {
   var packageJsPath = path.resolve(npmContainerDir, 'package.js');
   var indexJsPath = path.resolve(npmContainerDir, 'index.js');
   // create new npm container directory
-  execSync("mkdir -p '" + npmContainerDir + "'");
+  mkdirp.sync(npmContainerDir);
   // add package files
   fs.writeFileSync(indexJsPath, getContent(_indexJsContent));
   fs.writeFileSync(packageJsPath, getContent(_packageJsContent));
 
   // remove old npm package if exists
-  execSync("rm -rf '" + oldNpmPackageDir + "'");
+  if (fs.existsSync(oldNpmPackageDir)) {
+    rimraf.sync(oldNpmPackageDir);
+  }
+  
   // add new container as a package
-  execSync('echo "\nnpm-container" >> .meteor/packages');
+  echo.sync("\nnpm-container", ">>", ".meteor/packages")
 
   console.log();
   console.log("-> npm support has been initialized.")
