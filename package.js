@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Use npm modules with your Meteor App",
-  version: "1.2.1",
+  version: "1.2.2",
   git: "https://github.com/meteorhacks/npm.git",
   name: "meteorhacks:npm"
 });
