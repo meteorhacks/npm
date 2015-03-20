@@ -5,7 +5,7 @@ Package.describe({
   name: "meteorhacks:npm"
 });
 
-Package._transitional_registerBuildPlugin({
+Package.registerBuildPlugin({
   name: "initializing-npm-support",
   use: [
     'underscore'
