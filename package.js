@@ -15,7 +15,6 @@ Package.registerBuildPlugin({
   ],
   npmDependencies: {
     'mkdirp': '0.5.0',
-    'rimraf': '2.2.8',
     'node-echo': '0.1.1',
     'js-beautify': '1.5.5'
   }

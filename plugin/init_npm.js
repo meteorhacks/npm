@@ -1,9 +1,6 @@
 var path = Npm.require('path');
 var fs = Npm.require('fs');
-var Future = Npm.require('fibers/future');
-var exec = Npm.require('child_process').exec;
 var mkdirp = Npm.require('mkdirp');
-var rimraf = Npm.require('rimraf');
 var echo = Npm.require('node-echo');
 var beautify = Npm.require('js-beautify');
 
@@ -38,19 +35,6 @@ if(canProceed() && !fs.existsSync(npmContainerDir)) {
   console.log("-> please start your app again.");
   console.log();
   process.exit(0);
-}
-
-function execSync(command, options) {
-  options = options || {};
-  var f = new Future();
-  exec(command, options, function(err, stdout, stderr) {
-    if(err) {
-      throw err;
-    } else {
-      f.return(stdout);
-    }
-  });
-  return f.wait();
 }
 
 // check whether is this `meteor test-packages` or not
