@@ -1,6 +1,6 @@
 # Use Npm Modules with Your Meteor App
 
-With Meteor, npm modules can onl you only can use `npm` modules inside packages. You can't directly use `npm` modules with meteor apps. This package solves that issue :)
+With Meteor you only can use `npm` modules inside packages. You can't directly use `npm` modules with meteor apps. This package solves that issue :)
 
 ## Installation
 

@@ -5,16 +5,18 @@ Package.describe({
   name: "meteorhacks:npm"
 });
 
-Package._transitional_registerBuildPlugin({
+Package.registerBuildPlugin({
   name: "initializing-npm-support",
-  use: [],
+  use: [
+    'underscore'
+  ],
   sources: [
     'plugin/init_npm.js'
   ],
   npmDependencies: {
     'mkdirp': '0.5.0',
-    'rimraf': '2.2.8',
-    'node-echo': '0.1.1'
+    'node-echo': '0.1.1',
+    'js-beautify': '1.5.5'
   }
 });
 
