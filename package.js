@@ -8,7 +8,7 @@ Package.describe({
 Package.registerBuildPlugin({
   name: "initializing-npm-support",
   use: [
-    'underscore'
+    'underscore@1.0.2'
   ],
   sources: [
     'plugin/init_npm.js'
