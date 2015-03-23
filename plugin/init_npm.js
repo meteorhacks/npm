@@ -29,6 +29,15 @@ if(canProceed() && !fs.existsSync(npmContainerDir)) {
 
   // add new container as a package
   echo.sync("\nnpm-container", ">>", ".meteor/packages");
+
+  console.log();
+  console.log("-> npm support has been initialized.")
+  console.log("-> please start your app again.");
+  console.log();
+  // if there is no npm-container when running `meteor`
+  // we need to kill the current running process, otherwise
+  // dependencies in the packages.json won't get added
+  process.exit(0);
 }
 
 // check whether is this `meteor test-packages` or not
