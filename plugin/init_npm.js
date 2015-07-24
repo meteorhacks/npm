@@ -6,6 +6,17 @@ var beautify = Npm.require('js-beautify');
 
 var npmContainerDir = path.resolve('./packages/npm-container');
 var packagesJsonPath = path.resolve('./packages.json');
+var packageJsPath = path.resolve(npmContainerDir, 'package.js');
+var indexJsPath = path.resolve(npmContainerDir, 'index.js');
+
+// update for Meteor 1.2
+// We need to add package.json file as an static assest for that
+if(canProceed() && hasOldPackageJson()) {
+  fs.writeFileSync(packageJsPath, getContent(_packageJsContent));
+  console.log("\n");
+  console.log("-> updated `npm-container` to support Meteor 1.2");
+  console.log();
+}
 
 if(canProceed() && !fs.existsSync(packagesJsonPath)) {
   console.log('\n');
@@ -19,8 +30,6 @@ if(canProceed() && !fs.existsSync(packagesJsonPath)) {
 if(canProceed() && !fs.existsSync(npmContainerDir)) {
   console.log("=> Creating container package for npm modules");
 
-  var packageJsPath = path.resolve(npmContainerDir, 'package.js');
-  var indexJsPath = path.resolve(npmContainerDir, 'index.js');
   // create new npm container directory
   mkdirp.sync(npmContainerDir);
   // add package files
@@ -51,6 +60,23 @@ function canProceed() {
   }
 
   return true;
+}
+
+
+function hasOldPackageJson() {
+  if(!fs.existsSync(packageJsPath)) {
+    return false;
+  }
+
+  var content = fs.readFileSync(packageJsPath, 'utf8');
+  var versionParts = content.match(/version: '(.*)'/);
+  if(!versionParts) {
+    return false;
+  }
+
+  var version = versionParts[1];
+  var isOldVersion = version === "1.0.0";
+  return isOldVersion;
 }
 
 // getContent inside a function
@@ -86,7 +112,7 @@ function _packageJsContent () {
 
   Package.describe({
     summary: 'Contains all your npm dependencies',
-    version: '1.0.0',
+    version: '1.1.0',
     name: 'npm-container'
   });
 
@@ -102,6 +128,7 @@ function _packageJsContent () {
   // Adding the app's packages.json as a used file for this package will get
   // Meteor to watch it and reload this package when it changes
   Package.onUse(function(api) {
-    api.add_files(['index.js', '../../packages.json'], 'server');
+    api.add_files('index.js', 'server');
+    api.add_files('../../packages.json', 'server', {isAsset: true});
   });
 }
