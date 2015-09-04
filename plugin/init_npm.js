@@ -9,15 +9,6 @@ var packagesJsonPath = path.resolve('./packages.json');
 var packageJsPath = path.resolve(npmContainerDir, 'package.js');
 var indexJsPath = path.resolve(npmContainerDir, 'index.js');
 
-// update for Meteor 1.2
-// We need to add package.json file as an static assest for that
-if(canProceed() && hasOldPackageJson()) {
-  fs.writeFileSync(packageJsPath, getContent(_packageJsContent));
-  console.log("\n");
-  console.log("-> updated `npm-container` to support Meteor 1.2");
-  console.log();
-}
-
 if(canProceed() && !fs.existsSync(packagesJsonPath)) {
   console.log('\n');
   console.log("-> creating `packages.json` for the first time.");
@@ -62,23 +53,6 @@ function canProceed() {
   return true;
 }
 
-
-function hasOldPackageJson() {
-  if(!fs.existsSync(packageJsPath)) {
-    return false;
-  }
-
-  var content = fs.readFileSync(packageJsPath, 'utf8');
-  var versionParts = content.match(/version: '(.*)'/);
-  if(!versionParts) {
-    return false;
-  }
-
-  var version = versionParts[1];
-  var isOldVersion = version === "1.0.0";
-  return isOldVersion;
-}
-
 // getContent inside a function
 function getContent(func) {
   var lines = func.toString().split('\n');
@@ -112,7 +86,7 @@ function _packageJsContent () {
 
   Package.describe({
     summary: 'Contains all your npm dependencies',
-    version: '1.1.0',
+    version: '1.2.0',
     name: 'npm-container'
   });
 
@@ -128,7 +102,11 @@ function _packageJsContent () {
   // Adding the app's packages.json as a used file for this package will get
   // Meteor to watch it and reload this package when it changes
   Package.onUse(function(api) {
-    api.add_files('index.js', 'server');
-    api.add_files('../../packages.json', 'server', {isAsset: true});
+    api.addFiles('index.js', 'server');
+    if(api.addAssets) {
+      api.addAssets('../../packages.json', 'server');
+    } else {
+      api.addFiles('../../packages.json', 'server', {isAsset: true});
+    }
   });
 }
