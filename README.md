@@ -1,6 +1,7 @@
 # Use Npm Modules with Your Meteor App
 
-> ** Using With Meteor 1.2 **
+> **Using With Meteor 1.2**
+>
 > If you are already using `meteorhacks:npm` and want to use Meteor 1.2 for your project. Follow these steps:
 > 
 > ~~~
