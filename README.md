@@ -4,8 +4,8 @@
 > If you are already using `meteorhacks:npm` and want to use Meteor 1.2 for your project. Follow these steps:
 > 
 > ~~~
-> meteor remove npm-container
 > rm -rf packages/npm-container
+> meteor remove npm-container
 > meteor update meteorhacks:npm
 > meteor
 > ~~~
