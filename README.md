@@ -1,5 +1,15 @@
 # Use Npm Modules with Your Meteor App
 
+> ** Using With Meteor 1.2 **
+> If you are already using `meteorhacks:npm` and want to use Meteor 1.2 for your project. Follow these steps:
+> 
+> ~~~
+> meteor remove npm-container
+> rm -rf packages/npm-container
+> meteor update meteorhacks:npm
+> meteor
+> ~~~
+
 With Meteor you only can use `npm` modules inside packages. You can't directly use `npm` modules with meteor apps. This package solves that issue :)
 
 ## Installation
