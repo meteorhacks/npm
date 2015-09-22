@@ -126,7 +126,7 @@ Wrap an asynchronous function and allow it to be run inside Meteor without callb
 ~~~js
 
 //declare a simple async function
-function delayedMessge(delay, message, callback) {
+function delayedMessage(delay, message, callback) {
   setTimeout(function() {
     callback(null, message);
   }, delay);
