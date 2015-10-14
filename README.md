@@ -133,7 +133,7 @@ function delayedMessage(delay, message, callback) {
 }
 
 //wrapping
-var wrappedDelayedMessage = Async.wrap(delayedMessge);
+var wrappedDelayedMessage = Async.wrap(delayedMessage);
 
 //usage
 Meteor.methods({
