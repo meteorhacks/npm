@@ -23,7 +23,7 @@ Then start your app with `meteor` and follow the instructions.
 
 ## Defining Packages
 
-Once the npm support has been initialized, you'll be having a file name called `packages.json` inside your app. Define packages on that file as shown below.
+Once npm support has been initialized, you'll have a file name called `packages.json` inside your app. Define packages in that file as shown below.
 
 ~~~json
 {
@@ -32,7 +32,7 @@ Once the npm support has been initialized, you'll be having a file name called `
 }
 ~~~
 
-> You must need to define absolute version number of the npm module
+> You must define an absolute version number for the npm module
 
 If you need to install an npm module from a specific commit, use the syntax:
 
@@ -41,6 +41,7 @@ If you need to install an npm module from a specific commit, use the syntax:
   "googleapis": "https://github.com/bradvogel/google-api-nodejs-client/archive/d945dabf416d58177b0c14da64e0d6038f0cc47b.tar.gz"
 }
 ~~~
+The above can be generated using [github releases](https://github.com/blog/1547-release-your-software). You're going to want to use `<commit hash>.tar.gz` version, not `archive/<version number>.tar.gz`.
 
 ## Using Packages
 
