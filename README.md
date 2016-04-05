@@ -1,15 +1,15 @@
 # Use Npm Modules with Your Meteor App
 
-> **Using With Meteor 1.2**
->
-> If you are already using `meteorhacks:npm` and want to use Meteor 1.2 for your project. Follow these steps:
-> 
-> ~~~
-> rm -rf packages/npm-container
-> meteor remove npm-container
-> meteor update meteorhacks:npm
-> meteor
-> ~~~
+> ### Using With Meteor 1.3
+> Meteor 1.3 has the build in NPM support. So, in Meteor 1.3 this package won't add anything.
+> #### Migration Guide 
+> If your app use this package, follow these steps to migrate into 1.3.
+> * Create a `package.json` in your app. Use: `npm init`.
+> * Move all the packages on `packages.json` into `package.json` dependencies.
+> * Then do a `npm install` to install those NPM module.
+> * Remove `meteorhacks:npm` from your app with: `meteor remove meteorhacks:npm`.
+> * Remove `npm-container` from your app with: `meteor remove npm-container`.
+> * If you use Async methods introduced by this package, use [`meteorhacks:async`](https://atmospherejs.com/meteorhacks/async) package directly.
 
 With Meteor you only can use `npm` modules inside packages. You can't directly use `npm` modules with meteor apps. This package solves that issue :)
 
